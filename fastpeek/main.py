@@ -12,10 +12,17 @@ def output_repo(repo_path: str):
         if os.path.exists(filename):
             os.remove(filename)
 
-    subprocess.run(f"git status > {FILENAMES['status']}", shell=True, cwd=repo_path)
-    subprocess.run(f"git log -1 > {FILENAMES['log']}", shell=True, cwd=repo_path)
+    subprocess.run(
+        ["git", "status", ">" + FILENAMES["status"]], shell=True, cwd=repo_path
+    )
 
-    # TODO add diff
+    subprocess.run(["git", "log", ">" + FILENAMES["log"]], shell=True, cwd=repo_path)
+    # TODO -> Diff is non functional for now
+    subprocess.run(
+        ["git", "diff", "HEAD~1", "HEAD", ">" + FILENAMES["diff"]],
+        shell=True,
+        cwd=repo_path,
+    )
 
 
 def run():
